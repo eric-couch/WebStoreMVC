@@ -1,17 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebStoreMVC.Data;
+using WebStoreMVC.Interfaces;
 using WebStoreMVC.Models;
+using WebStoreMVC.Services;
 
 namespace WebStoreMVC.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly StoreContext _context;
+        private readonly SystemDateTime _dateTime;
 
-        public CustomersController(StoreContext context)
+        public CustomersController(StoreContext context, SystemDateTime dateTime)
         {
             _context = context;
+            _dateTime = dateTime;
+        }
+
+        [Route("get-datetime")]
+        public IActionResult GetDateTime()
+        {
+            return Json(_dateTime.Now);
         }
 
         public async Task<IActionResult> Index()

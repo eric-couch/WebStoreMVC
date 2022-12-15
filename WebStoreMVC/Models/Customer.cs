@@ -11,7 +11,7 @@ public partial class Customer
     [Key]
     public int Id { get; set; }
     [Display(Name ="First Name")]
-    [Required]
+    [Required(ErrorMessage = "First Name is required")]
     [StringLength(50)]
     [MinLength(4, ErrorMessage = "This Name is too short.")]
     public string FirstName { get; set; } = null!;
@@ -20,8 +20,10 @@ public partial class Customer
     [Display(Name = "Customer Address")]
     public string? Address { get; set; }
     [Display(Name = "Phone Number")]
+    [Phone(ErrorMessage ="You don't know your own phone number?")]
     public string? Phone { get; set; }
     [Display(Name = "Email Address")]
+    [EmailAddress]
     public string? Email { get; set; }
 
     [InverseProperty("Customer")]

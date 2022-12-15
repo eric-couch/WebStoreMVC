@@ -1,0 +1,78 @@
+﻿<dl class>
+    <dt class="col-cm-4">
+        Title
+    </dt>
+    <dd class="col-cm-8">
+        <input type="text" id="idTitle" />
+    </dd>
+    <div id="idTitleError" class="text-danger"></div>
+    <dt class="col-cm-4">
+        Size
+    </dt>
+    <dd class="col-cm-8">
+        <input type="number" id="idSize" />
+    </dd>
+    <div id="idSizeError" class="text-danger"></div>
+    <dt class="col-cm-4">
+        Format
+    </dt>
+    <dd class="col-cm-8">
+        <select id="idFormat">
+            <option value="pdf">PDF</option>
+            <option value="txt">Text</option>
+            <option value="docx">Word Document</option>
+        </select>
+    </dd>
+    <div id="idFormatError" class="text-danger"></div>
+</dl>
+<button id="idSubmit" class="btn btn-primary">Submit</button>
+<script>
+    document.getElementById("idSubmit").addEventListener("click", function()
+    {
+        var title = document.getElementById("idTitle").value;
+        var size = document.getElementById("idSize").value;
+        var format = document.getElementById("idFormat").value;
+
+        var titleError = document.getElementById("idTitleError");
+        var sizeError = document.getElementById("idSizeError");
+        var formatError = document.getElementById("idFormatError");
+
+        titleError.innerHTML = "";
+        sizeError.innerHTML = "";
+        formatError.innerHTML = "";
+
+        var data = { title: title, size: size || 0, format: format };
+        var res = fetch("/Home/JsonTestResponse", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+                if (data.success) {
+                    alert("Success");
+                } else {
+                    if (data.Title) {
+                        data.Title.forEach(error => {
+                            titleError.innerHTML += error + "<br />";
+                        });
+                    }
+                    if (data.Size) {
+                        data.Size.forEach(error => {
+                            sizeError.innerHTML += error + "<br />";
+                        });
+                    }
+                    if (data.Format) {
+                        data.Format.forEach(error => {
+                            formatError.innerHTML += error + "<br />";
+                        });
+                    }
+                }
+            });
+    });
+</script>

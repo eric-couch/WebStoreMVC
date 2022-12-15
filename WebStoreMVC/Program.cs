@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebStoreMVC.Data;
+using WebStoreMVC.Interfaces;
+using WebStoreMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<StoreContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebStore")));
+builder.Services.AddSingleton<IDateTime, SystemDateTime>();
 
 var app = builder.Build();
 
