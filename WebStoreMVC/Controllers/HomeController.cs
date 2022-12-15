@@ -52,7 +52,7 @@ namespace WebStoreMVC.Controllers
             {
                 return BadRequest(ModelState);
             }
-            return Ok(ModelState);
+            return Ok(doc);
         }
     }
 }

@@ -10,9 +10,9 @@ namespace WebStoreMVC.Controllers
     public class CustomersController : Controller
     {
         private readonly StoreContext _context;
-        private readonly SystemDateTime _dateTime;
+        private readonly IDateTime _dateTime;
 
-        public CustomersController(StoreContext context, SystemDateTime dateTime)
+        public CustomersController(StoreContext context, IDateTime dateTime)
         {
             _context = context;
             _dateTime = dateTime;
